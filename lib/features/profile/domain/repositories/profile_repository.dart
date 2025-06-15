@@ -1,6 +1,9 @@
+import 'package:dartz/dartz.dart';
+
+import '../../../../core/error/failure.dart';
 import '../entities/profile.dart';
 
 abstract class ProfileRepository {
-  Future<List<Profile>> getUsers(int page);
-  Future<Profile> getUser(int id);
+  Future<Either<Failure, Profile>> getUser(int id);
+  Future<Either<Failure, List<Profile>>> getAllUser(int page);
 }
