@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
+
+import '../../../../core/error/failure.dart';
 import '../entities/profile.dart';
 import '../repositories/profile_repository.dart';
-import 'package:dartz/dartz.dart';
 
 class GetUser {
   final ProfileRepository profileRepository;
@@ -11,5 +13,3 @@ class GetUser {
     return await profileRepository.getUser(id);
   }
 }
-
-class Failure {}
