@@ -15,13 +15,12 @@ class ProfileModel extends Profile {
 
   // Map -> ProfileModel
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> data = json["data"];
     return ProfileModel(
-      id: data["id"],
-      email: data["email"],
-      firstName: data["first_name"],
-      lastName: data["last_name"],
-      avatar: data["avatar"],
+      id: json["id"],
+      email: json["email"],
+      firstName: json["first_name"],
+      lastName: json["last_name"],
+      avatar: json["avatar"],
     );
   }
 
@@ -37,7 +36,7 @@ class ProfileModel extends Profile {
   }
 
   // List<Map> -> List<ProfileModel>
-  static List<ProfileModel> fromJsonList(List<Map<String, dynamic>> data) {
+  static List<ProfileModel> fromJsonList(List<dynamic> data) {
     if (data.isEmpty) return [];
     return data.map((e) => ProfileModel.fromJson(e)).toList();
   }
