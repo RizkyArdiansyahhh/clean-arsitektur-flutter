@@ -1,4 +1,4 @@
-import 'package:clean_arsitektur/features/profile/domain/entities/profile.dart';
+import '../../domain/entities/profile.dart';
 
 class ProfileModel extends Profile {
   final String firstName;
@@ -34,5 +34,11 @@ class ProfileModel extends Profile {
       "last_name": lastName,
       "avatar": avatar,
     };
+  }
+
+  // List<Map> -> List<ProfileModel>
+  static List<ProfileModel> fromJsonList(List<Map<String, dynamic>> data) {
+    if (data.isEmpty) return [];
+    return data.map((e) => ProfileModel.fromJson(e)).toList();
   }
 }
