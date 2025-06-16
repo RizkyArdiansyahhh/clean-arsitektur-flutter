@@ -23,7 +23,7 @@ class ProfileRemoteDatasourceImplementation implements ProfileRemoteDatasource {
   @override
   Future<Profile> getUser(int id) async {
     // https://reqres.in/api/users/2
-    final Uri url = Uri.parse("https://reqres.in/api/users/2");
+    final Uri url = Uri.parse("https://reqres.in/api/users/$id");
     final response = await http.get(url);
     Map<String, dynamic> dataBody = jsonDecode(response.body);
     Map<String, dynamic> data = dataBody["data"];
