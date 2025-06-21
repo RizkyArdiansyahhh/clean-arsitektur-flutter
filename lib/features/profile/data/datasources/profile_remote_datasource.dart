@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_arsitektur/core/error/exception.dart';
 import 'package:clean_arsitektur/features/profile/data/models/profile_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,9 +15,16 @@ class ProfileRemoteDatasourceImplementation implements ProfileRemoteDatasource {
     // https://reqres.in/api/users?page=2
     final Uri url = Uri.parse("https://reqres.in/api/users?page=$page");
     final response = await http.get(url);
-    Map<String, dynamic> dataBody = jsonDecode(response.body);
-    List<dynamic> data = dataBody["data"];
-    return ProfileModel.fromJsonList(data);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> dataBody = jsonDecode(response.body);
+      List<dynamic> data = dataBody["data"];
+      return ProfileModel.fromJsonList(data);
+    } else if (response.statusCode == 404) {
+      throw EmptyException(message: "Data Not Found - Error 404");
+    } else {
+      throw GeneralException(message: "Cannot get Data");
+    }
   }
 
   @override
@@ -24,8 +32,15 @@ class ProfileRemoteDatasourceImplementation implements ProfileRemoteDatasource {
     // https://reqres.in/api/users/2
     final Uri url = Uri.parse("https://reqres.in/api/users/$id");
     final response = await http.get(url);
-    Map<String, dynamic> dataBody = jsonDecode(response.body);
-    Map<String, dynamic> data = dataBody["data"];
-    return ProfileModel.fromJson(data);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> dataBody = jsonDecode(response.body);
+      Map<String, dynamic> data = dataBody["data"];
+      return ProfileModel.fromJson(data);
+    } else if (response.statusCode == 404) {
+      throw EmptyException(message: "Data Not Found - Error 404");
+    } else {
+      throw GeneralException(message: "cannot get data");
+    }
   }
 }
